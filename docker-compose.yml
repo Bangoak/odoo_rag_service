@@ -1,0 +1,33 @@
+version: '3.8'
+
+services:
+  odoo-rag-service:
+    build: .
+    ports:
+      - "8001:8001"
+    environment:
+      - ODOO_URL=${ODOO_URL}
+      - ODOO_DB=${ODOO_DB}
+      - ODOO_LOGIN=${ODOO_LOGIN}
+      - ODOO_API_KEY=${ODOO_API_KEY}
+      - USE_RAG=${USE_RAG:-true}
+      - EMBED_MODEL=${EMBED_MODEL:-sentence-transformers/all-MiniLM-L6-v2}
+      - HOST=0.0.0.0
+      - PORT=8001
+    env_file:
+      - .env
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8001/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    volumes:
+      - ./logs:/app/logs
+    networks:
+      - odoo-rag-network
+
+networks:
+  odoo-rag-network:
+    driver: bridge
