@@ -61,191 +61,128 @@ app.add_middleware(
 # Global variables
 _model = None
 
-# Product categories for intelligent search
-PRODUCT_CATEGORIES = {
-    "back_pain": {
+# 1. REPLACE your existing PRODUCT_CATEGORIES with this data-driven version
+PRODUCT_HIERARCHY = {
+    "rehabilitacion": {
+        "product_classes": ["Rehabilitacion"],
+        "product_subclasses": [
+            "Material blando", "Fisioterapia", "Movilidad", "Cuidado en casa",
+            "Terapia respiratoria", "Alivio del dolor", "Bienestar y relajacion"
+        ],
+        "product_families": [
+            "Inmovilizadores", "Soportes", "Fajas", "Bastones", "Sillas de ruedas",
+            "Andadores", "Muletas", "Estimuladores", "Colchones", "Almohadas y cojines"
+        ],
         "keywords": [
-            "back pain",
-            "backache",
-            "spine",
-            "lumbar",
-            "vertebrae",
-            "posture",
-            "ergonomic",
+            "rehabilitacion", "fisioterapia", "silla", "ruedas", "baston", "muleta",
+            "andador", "faja", "soporte", "inmovilizador", "estimulador", "movilidad"
         ],
-        "symptoms": [
-            "pain in back",
-            "back hurts",
-            "backache",
-            "spine pain",
-            "lumbar pain",
-        ],
-        "products": [
-            "back support",
-            "ergonomic chair",
-            "lumbar pillow",
-            "back brace",
-            "posture corrector",
-        ],
-        "odoo_search_terms": [
-            "back",
-            "spine",
-            "lumbar",
-            "ergonomic",
-            "posture",
-            "support",
-            "brace",
-            "pillow",
-        ],
+        "spanish_terms": [
+            "rehabilitacion", "fisioterapia", "silla de ruedas", "baston", "muleta",
+            "andador", "faja", "soporte", "movilidad", "terapia"
+        ]
     },
-    "joint_pain": {
+    
+    "material_medico": {
+        "product_classes": ["Material medico"],
+        "product_subclasses": [
+            "Quirurgico", "Instrumental", "Descartable", "Protesis", "Cirugia vascular"
+        ],
+        "product_families": [
+            "Cateter", "Pinzas", "Canulas", "Sondas", "Agujas", "Jeringas",
+            "Guantes", "Mascarillas", "Bisturi", "Tijeras", "Hilos de sutura"
+        ],
         "keywords": [
-            "joint pain",
-            "arthritis",
-            "knee",
-            "hip",
-            "shoulder",
-            "elbow",
-            "inflammation",
+            "quirurgico", "instrumental", "cateter", "pinza", "canula", "sonda",
+            "aguja", "jeringa", "guante", "mascarilla", "bisturi", "cirugia"
         ],
-        "symptoms": [
-            "joint pain",
-            "arthritis",
-            "knee pain",
-            "hip pain",
-            "shoulder pain",
-        ],
-        "products": [
-            "joint support",
-            "compression sleeve",
-            "pain relief cream",
-            "anti-inflammatory",
-        ],
-        "odoo_search_terms": [
-            "joint",
-            "knee",
-            "hip",
-            "shoulder",
-            "elbow",
-            "arthritis",
-            "compression",
-            "sleeve",
-        ],
+        "spanish_terms": [
+            "material medico", "quirurgico", "instrumental", "cateter", "pinza",
+            "canula", "sonda", "aguja", "jeringa", "cirugia"
+        ]
     },
-    "headache": {
+    
+    "medico_hospitalario": {
+        "product_classes": ["Medico hospitalario"],
+        "product_subclasses": [
+            "Ultrasonido", "Monitoreo de signos vitales", "Quirofano", "Mobiliario",
+            "Anestesia", "Ventilacion mecanica", "Cuidado materno infantil"
+        ],
+        "product_families": [
+            "Ultrasonido", "Monitores", "Maquina de anestesia", "Lamparas",
+            "Mesas", "Ventiladores mecanicos", "Transductores", "Cables", "Sensores"
+        ],
         "keywords": [
-            "headache",
-            "migraine",
-            "tension",
-            "stress",
-            "eye strain",
-            "sinus",
+            "hospital", "ultrasonido", "monitor", "anestesia", "ventilador",
+            "lampara", "mesa", "quirofano", "transductor", "cable", "sensor", "SPO2"
         ],
-        "symptoms": ["headache", "migraine", "head pain", "tension headache"],
-        "products": ["pain reliever", "migraine relief", "eye mask", "stress relief"],
-        "odoo_search_terms": [
-            "headache",
-            "migraine",
-            "pain",
-            "relief",
-            "eye",
-            "mask",
-            "stress",
-        ],
+        "spanish_terms": [
+            "medico hospitalario", "hospital", "ultrasonido", "monitor", "anestesia",
+            "ventilador", "quirofano", "mesa quirurgica", "lampara", "SPO2", "mindray"
+        ]
     },
-    "general_pain": {
-        "keywords": ["pain", "ache", "sore", "hurt", "discomfort", "injury"],
-        "symptoms": ["pain", "ache", "hurt", "sore", "discomfort"],
-        "products": [
-            "pain relief",
-            "analgesic",
-            "anti-inflammatory",
-            "pain medication",
+    
+    "cardiologia_intervencionista": {
+        "product_classes": ["Cardiologia intervencionista"],
+        "product_subclasses": [
+            "Coronario", "Periferico vascular", "TAVI", "Denervacion renal"
         ],
-        "odoo_search_terms": [
-            "pain",
-            "relief",
-            "analgesic",
-            "anti-inflammatory",
-            "medication",
-            "cream",
-            "gel",
+        "product_families": [
+            "Stents", "Balones", "Cateter", "Guias", "Introductores", "Valvulas"
         ],
-    },
-    "medical_monitoring": {
         "keywords": [
-            "monitoring",
-            "vital signs",
-            "SPO2",
-            "pulse oximeter",
-            "hospital",
-            "medical",
+            "cardiologia", "stent", "balon", "cateter", "guia", "introductor",
+            "valvula", "coronario", "vascular", "TAVI", "cardiaco"
         ],
-        "symptoms": [
-            "need monitoring",
-            "vital signs monitoring",
-            "SPO2 monitoring",
-            "hospital monitoring",
-        ],
-        "products": [
-            "monitor",
-            "cable",
-            "sensor",
-            "accessory",
-            "replacement",
-            "mindray",
-        ],
-        "odoo_search_terms": [
-            "monitoring",
-            "vital",
-            "signs",
-            "SPO2",
-            "pulse",
-            "oximeter",
-            "hospital",
-            "medical",
-            "mindray",
-            "cable",
-            "sensor",
-            "accessory",
-            "replacement",
-        ],
+        "spanish_terms": [
+            "cardiologia", "stent", "balon", "cateter", "guia", "introductor",
+            "valvula", "coronario", "vascular", "corazon"
+        ]
     },
-    "medical_equipment": {
+    
+    "medico_clinico": {
+        "product_classes": ["Medico clinico"],
+        "product_subclasses": [
+            "Medicion y diagnostico", "Fisioterapia", "Mobiliario", "Cirugia menor"
+        ],
+        "product_families": [
+            "Estetoscopios", "Esfigmomanometros", "Electrocardiografos", "Balanzas",
+            "Termometros", "Otoscopios", "Oximetros", "Estimuladores"
+        ],
         "keywords": [
-            "medical equipment",
-            "hospital equipment",
-            "doctor",
-            "patient",
-            "clinical",
+            "clinico", "estetoscopio", "esfigmomanometro", "electrocardiografo",
+            "balanza", "termometro", "otoscopio", "oximetro", "diagnostico"
         ],
-        "symptoms": [
-            "need medical equipment",
-            "hospital equipment",
-            "clinical equipment",
-        ],
-        "products": ["equipment", "device", "instrument", "tool", "apparatus"],
-        "odoo_search_terms": [
-            "medical",
-            "equipment",
-            "hospital",
-            "doctor",
-            "patient",
-            "clinical",
-            "device",
-            "instrument",
-            "tool",
-            "apparatus",
-        ],
+        "spanish_terms": [
+            "medico clinico", "estetoscopio", "tension", "electrocardiografo",
+            "balanza", "termometro", "diagnostico", "clinica"
+        ]
     },
+    
+    "atencion_medica": {
+        "product_classes": ["Atencion medica"],
+        "product_subclasses": [
+            "Cuidado de heridas", "Ostomia", "Incontinencia", "Alimentacion",
+            "Terapia para varices y linfedema", "Monitoreo"
+        ],
+        "product_families": [
+            "Medias y calcetines", "Apositos", "Bolsas", "Mascaras", "Gel",
+            "Cintas y vendas", "Sondas", "Bombas"
+        ],
+        "keywords": [
+            "atencion", "cuidado", "heridas", "ostomia", "incontinencia",
+            "varices", "medias", "aposito", "vendas", "gel", "compresion"
+        ],
+        "spanish_terms": [
+            "atencion medica", "cuidado", "heridas", "ostomia", "medias",
+            "apositos", "vendas", "gel", "compresion"
+        ]
+    }
 }
-
-
 # Pydantic models
 class SearchRequest(BaseModel):
     term: str = Field(..., description="Search term for products", min_length=1)
     limit: int = Field(10, description="Maximum number of results", ge=1, le=100)
-
 
 class RAGRequest(BaseModel):
     query: str = Field(..., description="Natural language query", min_length=1)
@@ -253,7 +190,6 @@ class RAGRequest(BaseModel):
     include_alternatives: bool = Field(
         True, description="Include premium and budget alternatives"
     )
-
 
 class IntelligentSearchRequest(BaseModel):
     query: str = Field(
@@ -283,7 +219,6 @@ def get_odoo_connection():
         logger.error(f"Odoo connection failed: {e}")
         raise HTTPException(status_code=502, detail="Odoo connection failed")
 
-
 def execute_odoo_query(
     model: str, method: str, args: list, kwargs: dict = None, retries: int = 2
 ):
@@ -304,7 +239,6 @@ def execute_odoo_query(
                 )
             time.sleep(0.4 * (attempt + 1))
 
-
 def get_embedder():
     """Get or initialize the sentence transformer model."""
     global _model
@@ -318,55 +252,209 @@ def get_embedder():
             raise HTTPException(status_code=500, detail="Failed to load AI model")
     return _model
 
+PRODUCT_HIERARCHY = {
+    "rehabilitacion": {
+        "product_classes": ["Rehabilitacion"],
+        "product_subclasses": [
+            "Material blando", "Fisioterapia", "Movilidad", "Cuidado en casa",
+            "Terapia respiratoria", "Alivio del dolor", "Bienestar y relajacion"
+        ],
+        "product_families": [
+            "Inmovilizadores", "Soportes", "Fajas", "Bastones", "Sillas de ruedas",
+            "Andadores", "Muletas", "Estimuladores", "Colchones", "Almohadas y cojines"
+        ],
+        "keywords": [
+            "rehabilitacion", "fisioterapia", "silla", "ruedas", "baston", "muleta",
+            "andador", "faja", "soporte", "inmovilizador", "estimulador", "movilidad"
+        ],
+        "spanish_terms": [
+            "rehabilitacion", "fisioterapia", "silla de ruedas", "baston", "muleta",
+            "andador", "faja", "soporte", "movilidad", "terapia"
+        ]
+    },
+    
+    "material_medico": {
+        "product_classes": ["Material medico"],
+        "product_subclasses": [
+            "Quirurgico", "Instrumental", "Descartable", "Protesis", "Cirugia vascular"
+        ],
+        "product_families": [
+            "Cateter", "Pinzas", "Canulas", "Sondas", "Agujas", "Jeringas",
+            "Guantes", "Mascarillas", "Bisturi", "Tijeras", "Hilos de sutura"
+        ],
+        "keywords": [
+            "quirurgico", "instrumental", "cateter", "pinza", "canula", "sonda",
+            "aguja", "jeringa", "guante", "mascarilla", "bisturi", "cirugia"
+        ],
+        "spanish_terms": [
+            "material medico", "quirurgico", "instrumental", "cateter", "pinza",
+            "canula", "sonda", "aguja", "jeringa", "cirugia"
+        ]
+    },
+    
+    "medico_hospitalario": {
+        "product_classes": ["Medico hospitalario"],
+        "product_subclasses": [
+            "Ultrasonido", "Monitoreo de signos vitales", "Quirofano", "Mobiliario",
+            "Anestesia", "Ventilacion mecanica", "Cuidado materno infantil"
+        ],
+        "product_families": [
+            "Ultrasonido", "Monitores", "Maquina de anestesia", "Lamparas",
+            "Mesas", "Ventiladores mecanicos", "Transductores", "Cables", "Sensores"
+        ],
+        "keywords": [
+            "hospital", "ultrasonido", "monitor", "anestesia", "ventilador",
+            "lampara", "mesa", "quirofano", "transductor", "cable", "sensor", "SPO2"
+        ],
+        "spanish_terms": [
+            "medico hospitalario", "hospital", "ultrasonido", "monitor", "anestesia",
+            "ventilador", "quirofano", "mesa quirurgica", "lampara", "SPO2", "mindray"
+        ]
+    },
+    
+    "cardiologia_intervencionista": {
+        "product_classes": ["Cardiologia intervencionista"],
+        "product_subclasses": [
+            "Coronario", "Periferico vascular", "TAVI", "Denervacion renal"
+        ],
+        "product_families": [
+            "Stents", "Balones", "Cateter", "Guias", "Introductores", "Valvulas"
+        ],
+        "keywords": [
+            "cardiologia", "stent", "balon", "cateter", "guia", "introductor",
+            "valvula", "coronario", "vascular", "TAVI", "cardiaco"
+        ],
+        "spanish_terms": [
+            "cardiologia", "stent", "balon", "cateter", "guia", "introductor",
+            "valvula", "coronario", "vascular", "corazon"
+        ]
+    },
+    
+    "medico_clinico": {
+        "product_classes": ["Medico clinico"],
+        "product_subclasses": [
+            "Medicion y diagnostico", "Fisioterapia", "Mobiliario", "Cirugia menor"
+        ],
+        "product_families": [
+            "Estetoscopios", "Esfigmomanometros", "Electrocardiografos", "Balanzas",
+            "Termometros", "Otoscopios", "Oximetros", "Estimuladores"
+        ],
+        "keywords": [
+            "clinico", "estetoscopio", "esfigmomanometro", "electrocardiografo",
+            "balanza", "termometro", "otoscopio", "oximetro", "diagnostico"
+        ],
+        "spanish_terms": [
+            "medico clinico", "estetoscopio", "tension", "electrocardiografo",
+            "balanza", "termometro", "diagnostico", "clinica"
+        ]
+    },
+    
+    "atencion_medica": {
+        "product_classes": ["Atencion medica"],
+        "product_subclasses": [
+            "Cuidado de heridas", "Ostomia", "Incontinencia", "Alimentacion",
+            "Terapia para varices y linfedema", "Monitoreo"
+        ],
+        "product_families": [
+            "Medias y calcetines", "Apositos", "Bolsas", "Mascaras", "Gel",
+            "Cintas y vendas", "Sondas", "Bombas"
+        ],
+        "keywords": [
+            "atencion", "cuidado", "heridas", "ostomia", "incontinencia",
+            "varices", "medias", "aposito", "vendas", "gel", "compresion"
+        ],
+        "spanish_terms": [
+            "atencion medica", "cuidado", "heridas", "ostomia", "medias",
+            "apositos", "vendas", "gel", "compresion"
+        ]
+    }
+}
 
 def categorize_query(query: str) -> Dict[str, float]:
-    """Categorize the query into product categories with confidence scores."""
+    """Data-driven query categorization using actual product hierarchy."""
     query_lower = query.lower()
     scores = {}
-
-    for category, info in PRODUCT_CATEGORIES.items():
+    
+    for category, info in PRODUCT_HIERARCHY.items():
         score = 0
-        # Check for exact symptom matches
-        for symptom in info["symptoms"]:
-            if symptom in query_lower:
-                score += 2.0
-
-        # Check for keyword matches
+        
+        # Check product families (highest weight - most specific)
+        for family in info["product_families"]:
+            if family.lower() in query_lower:
+                score += 4.0
+        
+        # Check product subclasses (high weight)
+        for subclass in info["product_subclasses"]:
+            if subclass.lower() in query_lower:
+                score += 3.5
+        
+        # Check Spanish terms (optimized for your market)
+        for term in info["spanish_terms"]:
+            if term.lower() in query_lower:
+                score += 3.0
+        
+        # Check keywords
         for keyword in info["keywords"]:
-            if keyword in query_lower:
-                score += 1.0
-
-        # Check for product matches
-        for product in info["products"]:
-            if product in query_lower:
-                score += 1.5
-
+            if keyword.lower() in query_lower:
+                score += 2.0
+        
+        # Check product classes
+        for prod_class in info["product_classes"]:
+            if prod_class.lower() in query_lower:
+                score += 2.5
+        
         if score > 0:
             scores[category] = score
-
+    
     # Normalize scores
     if scores:
         max_score = max(scores.values())
         scores = {k: v / max_score for k, v in scores.items()}
-
+    
     return scores
-
-
 def get_odoo_search_terms(query: str) -> List[str]:
-    """Get Odoo search terms based on query categorization."""
+    """Generate enhanced search terms based on product classification data."""
     categories = categorize_query(query)
     search_terms = []
+    
+    # Add original query words (filtered)
+    query_words = [word for word in query.lower().split() if len(word) > 2]
+    search_terms.extend(query_words)
+    
+    # Add terms from top-scoring categories
+    for category, score in sorted(categories.items(), key=lambda x: x[1], reverse=True):
+        if score > 0.3:  # Only high-confidence matches
+            category_info = PRODUCT_HIERARCHY[category]
+            
+            # Add Spanish terms (best for Odoo search)
+            search_terms.extend(category_info["spanish_terms"][:4])
+            
+            # Add top product families (your actual products)
+            search_terms.extend(category_info["product_families"][:3])
+    
+    # Remove duplicates while preserving order
+    seen = set()
+    unique_terms = []
+    for term in search_terms:
+        if term.lower() not in seen:
+            seen.add(term.lower())
+            unique_terms.append(term)
+    
+    return unique_terms[:15]  # Limit for performance
 
-    for category, score in categories.items():
-        if score > 0.3:  # Only use categories with decent confidence
-            search_terms.extend(PRODUCT_CATEGORIES[category]["odoo_search_terms"])
-
-    # Add original query terms as fallback
-    query_words = query.lower().split()
-    search_terms.extend([word for word in query_words if len(word) > 3])
-
-    return list(set(search_terms))  # Remove duplicates
-
+def get_category_metadata(category: str) -> Dict:
+    """Get detailed metadata for a product category."""
+    if category in PRODUCT_HIERARCHY:
+        info = PRODUCT_HIERARCHY[category]
+        return {
+            "category": category,
+            "product_classes": info["product_classes"],
+            "total_subclasses": len(info["product_subclasses"]),
+            "total_families": len(info["product_families"]),
+            "top_families": info["product_families"][:5],
+            "search_optimization": info["spanish_terms"][:5]
+        }
+    return {}
 
 def search_odoo_products(search_terms: List[str], limit: int = 100) -> List[Dict]:
     """Search Odoo products using the provided search terms."""
@@ -515,7 +603,6 @@ def search_odoo_products(search_terms: List[str], limit: int = 100) -> List[Dict
         except Exception as fallback_error:
             logger.error(f"Even fallback failed: {fallback_error}")
             return []  # Return empty list if everything fails
-
 
 def rank_products_by_value(products: List[Dict]) -> List[Dict]:
     """Rank products by value proposition (quality, features, price)."""
@@ -832,7 +919,6 @@ async def health_check():
         "rag_enabled": USE_RAG,
     }
 
-
 @app.post("/search_products")
 async def search_products(request: SearchRequest):
     """Basic product search endpoint."""
@@ -873,7 +959,6 @@ async def search_products(request: SearchRequest):
     except Exception as e:
         logger.error(f"Search products failed: {e}")
         raise HTTPException(status_code=500, detail="Search failed")
-
 
 @app.post("/intelligent_search")
 async def intelligent_search(request: IntelligentSearchRequest):
@@ -1010,13 +1095,71 @@ async def recommend_products(request: IntelligentSearchRequest):
         raise HTTPException(status_code=500, detail="Product recommendations failed")
 
 
+# 6. ADD this function to enrich product data with classification
+def enrich_product_with_classification(product: Dict) -> Dict:
+    """Enrich product data with classification information."""
+    product_text = f"{product.get('name', '')} {product.get('description_sale', '')} {product.get('website_description', '')}"
+    
+    # Determine product category based on content
+    categories = categorize_query(product_text)
+    
+    # Add classification metadata
+    product["_classification"] = {
+        "categories": categories,
+        "primary_category": max(categories.items(), key=lambda x: x[1])[0] if categories else "general",
+        "confidence": max(categories.values()) if categories else 0.0
+    }
+    
+    return product
+
 @app.get("/categories")
 async def get_categories():
-    """Get available product categories and their keywords."""
+    """Get available product categories based on real product data."""
+    categories_info = {}
+    
+    for category, info in PRODUCT_HIERARCHY.items():
+        categories_info[category] = {
+            "product_classes": info["product_classes"],
+            "total_subclasses": len(info["product_subclasses"]),
+            "total_families": len(info["product_families"]),
+            "sample_families": info["product_families"][:5]
+        }
+    
     return {
-        "categories": PRODUCT_CATEGORIES,
-        "total_categories": len(PRODUCT_CATEGORIES),
+        "categories": categories_info,
+        "total_categories": len(PRODUCT_HIERARCHY),
+        "data_source": "Real product classification from inventory",
+        "coverage": "1,161 products across 289 families"
     }
+
+# 6. ADD enhanced classification endpoint
+@app.post("/classify_query")
+async def classify_query(request: dict):
+    """Enhanced query classification using real product data."""
+    try:
+        query = request.get("query", "")
+        if not query:
+            raise HTTPException(status_code=400, detail="Query is required")
+        
+        categories = categorize_query(query)
+        search_terms = get_odoo_search_terms(query)
+        
+        # Get detailed info for top category
+        top_category = max(categories.items(), key=lambda x: x[1])[0] if categories else None
+        category_metadata = get_category_metadata(top_category) if top_category else {}
+        
+        return {
+            "query": query,
+            "categories": categories,
+            "suggested_search_terms": search_terms,
+            "top_category": top_category,
+            "confidence": max(categories.values()) if categories else 0.0,
+            "category_metadata": category_metadata,
+            "classification_method": "data_driven_product_hierarchy"
+        }
+    except Exception as e:
+        logger.error(f"Enhanced query classification failed: {e}")
+        raise HTTPException(status_code=500, detail="Query classification failed")
 
 
 @app.get("/test_connection")
