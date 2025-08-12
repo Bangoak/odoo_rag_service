@@ -61,191 +61,128 @@ app.add_middleware(
 # Global variables
 _model = None
 
-# Product categories for intelligent search
-PRODUCT_CATEGORIES = {
-    "back_pain": {
+# 1. REPLACE your existing PRODUCT_CATEGORIES with this data-driven version
+PRODUCT_HIERARCHY = {
+    "rehabilitacion": {
+        "product_classes": ["Rehabilitacion"],
+        "product_subclasses": [
+            "Material blando", "Fisioterapia", "Movilidad", "Cuidado en casa",
+            "Terapia respiratoria", "Alivio del dolor", "Bienestar y relajacion"
+        ],
+        "product_families": [
+            "Inmovilizadores", "Soportes", "Fajas", "Bastones", "Sillas de ruedas",
+            "Andadores", "Muletas", "Estimuladores", "Colchones", "Almohadas y cojines"
+        ],
         "keywords": [
-            "back pain",
-            "backache",
-            "spine",
-            "lumbar",
-            "vertebrae",
-            "posture",
-            "ergonomic",
+            "rehabilitacion", "fisioterapia", "silla", "ruedas", "baston", "muleta",
+            "andador", "faja", "soporte", "inmovilizador", "estimulador", "movilidad"
         ],
-        "symptoms": [
-            "pain in back",
-            "back hurts",
-            "backache",
-            "spine pain",
-            "lumbar pain",
-        ],
-        "products": [
-            "back support",
-            "ergonomic chair",
-            "lumbar pillow",
-            "back brace",
-            "posture corrector",
-        ],
-        "odoo_search_terms": [
-            "back",
-            "spine",
-            "lumbar",
-            "ergonomic",
-            "posture",
-            "support",
-            "brace",
-            "pillow",
-        ],
+        "spanish_terms": [
+            "rehabilitacion", "fisioterapia", "silla de ruedas", "baston", "muleta",
+            "andador", "faja", "soporte", "movilidad", "terapia"
+        ]
     },
-    "joint_pain": {
+    
+    "material_medico": {
+        "product_classes": ["Material medico"],
+        "product_subclasses": [
+            "Quirurgico", "Instrumental", "Descartable", "Protesis", "Cirugia vascular"
+        ],
+        "product_families": [
+            "Cateter", "Pinzas", "Canulas", "Sondas", "Agujas", "Jeringas",
+            "Guantes", "Mascarillas", "Bisturi", "Tijeras", "Hilos de sutura"
+        ],
         "keywords": [
-            "joint pain",
-            "arthritis",
-            "knee",
-            "hip",
-            "shoulder",
-            "elbow",
-            "inflammation",
+            "quirurgico", "instrumental", "cateter", "pinza", "canula", "sonda",
+            "aguja", "jeringa", "guante", "mascarilla", "bisturi", "cirugia"
         ],
-        "symptoms": [
-            "joint pain",
-            "arthritis",
-            "knee pain",
-            "hip pain",
-            "shoulder pain",
-        ],
-        "products": [
-            "joint support",
-            "compression sleeve",
-            "pain relief cream",
-            "anti-inflammatory",
-        ],
-        "odoo_search_terms": [
-            "joint",
-            "knee",
-            "hip",
-            "shoulder",
-            "elbow",
-            "arthritis",
-            "compression",
-            "sleeve",
-        ],
+        "spanish_terms": [
+            "material medico", "quirurgico", "instrumental", "cateter", "pinza",
+            "canula", "sonda", "aguja", "jeringa", "cirugia"
+        ]
     },
-    "headache": {
+    
+    "medico_hospitalario": {
+        "product_classes": ["Medico hospitalario"],
+        "product_subclasses": [
+            "Ultrasonido", "Monitoreo de signos vitales", "Quirofano", "Mobiliario",
+            "Anestesia", "Ventilacion mecanica", "Cuidado materno infantil"
+        ],
+        "product_families": [
+            "Ultrasonido", "Monitores", "Maquina de anestesia", "Lamparas",
+            "Mesas", "Ventiladores mecanicos", "Transductores", "Cables", "Sensores"
+        ],
         "keywords": [
-            "headache",
-            "migraine",
-            "tension",
-            "stress",
-            "eye strain",
-            "sinus",
+            "hospital", "ultrasonido", "monitor", "anestesia", "ventilador",
+            "lampara", "mesa", "quirofano", "transductor", "cable", "sensor", "SPO2"
         ],
-        "symptoms": ["headache", "migraine", "head pain", "tension headache"],
-        "products": ["pain reliever", "migraine relief", "eye mask", "stress relief"],
-        "odoo_search_terms": [
-            "headache",
-            "migraine",
-            "pain",
-            "relief",
-            "eye",
-            "mask",
-            "stress",
-        ],
+        "spanish_terms": [
+            "medico hospitalario", "hospital", "ultrasonido", "monitor", "anestesia",
+            "ventilador", "quirofano", "mesa quirurgica", "lampara", "SPO2", "mindray"
+        ]
     },
-    "general_pain": {
-        "keywords": ["pain", "ache", "sore", "hurt", "discomfort", "injury"],
-        "symptoms": ["pain", "ache", "hurt", "sore", "discomfort"],
-        "products": [
-            "pain relief",
-            "analgesic",
-            "anti-inflammatory",
-            "pain medication",
+    
+    "cardiologia_intervencionista": {
+        "product_classes": ["Cardiologia intervencionista"],
+        "product_subclasses": [
+            "Coronario", "Periferico vascular", "TAVI", "Denervacion renal"
         ],
-        "odoo_search_terms": [
-            "pain",
-            "relief",
-            "analgesic",
-            "anti-inflammatory",
-            "medication",
-            "cream",
-            "gel",
+        "product_families": [
+            "Stents", "Balones", "Cateter", "Guias", "Introductores", "Valvulas"
         ],
-    },
-    "medical_monitoring": {
         "keywords": [
-            "monitoring",
-            "vital signs",
-            "SPO2",
-            "pulse oximeter",
-            "hospital",
-            "medical",
+            "cardiologia", "stent", "balon", "cateter", "guia", "introductor",
+            "valvula", "coronario", "vascular", "TAVI", "cardiaco"
         ],
-        "symptoms": [
-            "need monitoring",
-            "vital signs monitoring",
-            "SPO2 monitoring",
-            "hospital monitoring",
-        ],
-        "products": [
-            "monitor",
-            "cable",
-            "sensor",
-            "accessory",
-            "replacement",
-            "mindray",
-        ],
-        "odoo_search_terms": [
-            "monitoring",
-            "vital",
-            "signs",
-            "SPO2",
-            "pulse",
-            "oximeter",
-            "hospital",
-            "medical",
-            "mindray",
-            "cable",
-            "sensor",
-            "accessory",
-            "replacement",
-        ],
+        "spanish_terms": [
+            "cardiologia", "stent", "balon", "cateter", "guia", "introductor",
+            "valvula", "coronario", "vascular", "corazon"
+        ]
     },
-    "medical_equipment": {
+    
+    "medico_clinico": {
+        "product_classes": ["Medico clinico"],
+        "product_subclasses": [
+            "Medicion y diagnostico", "Fisioterapia", "Mobiliario", "Cirugia menor"
+        ],
+        "product_families": [
+            "Estetoscopios", "Esfigmomanometros", "Electrocardiografos", "Balanzas",
+            "Termometros", "Otoscopios", "Oximetros", "Estimuladores"
+        ],
         "keywords": [
-            "medical equipment",
-            "hospital equipment",
-            "doctor",
-            "patient",
-            "clinical",
+            "clinico", "estetoscopio", "esfigmomanometro", "electrocardiografo",
+            "balanza", "termometro", "otoscopio", "oximetro", "diagnostico"
         ],
-        "symptoms": [
-            "need medical equipment",
-            "hospital equipment",
-            "clinical equipment",
-        ],
-        "products": ["equipment", "device", "instrument", "tool", "apparatus"],
-        "odoo_search_terms": [
-            "medical",
-            "equipment",
-            "hospital",
-            "doctor",
-            "patient",
-            "clinical",
-            "device",
-            "instrument",
-            "tool",
-            "apparatus",
-        ],
+        "spanish_terms": [
+            "medico clinico", "estetoscopio", "tension", "electrocardiografo",
+            "balanza", "termometro", "diagnostico", "clinica"
+        ]
     },
+    
+    "atencion_medica": {
+        "product_classes": ["Atencion medica"],
+        "product_subclasses": [
+            "Cuidado de heridas", "Ostomia", "Incontinencia", "Alimentacion",
+            "Terapia para varices y linfedema", "Monitoreo"
+        ],
+        "product_families": [
+            "Medias y calcetines", "Apositos", "Bolsas", "Mascaras", "Gel",
+            "Cintas y vendas", "Sondas", "Bombas"
+        ],
+        "keywords": [
+            "atencion", "cuidado", "heridas", "ostomia", "incontinencia",
+            "varices", "medias", "aposito", "vendas", "gel", "compresion"
+        ],
+        "spanish_terms": [
+            "atencion medica", "cuidado", "heridas", "ostomia", "medias",
+            "apositos", "vendas", "gel", "compresion"
+        ]
+    }
 }
-
-
 # Pydantic models
 class SearchRequest(BaseModel):
     term: str = Field(..., description="Search term for products", min_length=1)
     limit: int = Field(10, description="Maximum number of results", ge=1, le=100)
-
 
 class RAGRequest(BaseModel):
     query: str = Field(..., description="Natural language query", min_length=1)
@@ -253,7 +190,6 @@ class RAGRequest(BaseModel):
     include_alternatives: bool = Field(
         True, description="Include premium and budget alternatives"
     )
-
 
 class IntelligentSearchRequest(BaseModel):
     query: str = Field(
@@ -283,7 +219,6 @@ def get_odoo_connection():
         logger.error(f"Odoo connection failed: {e}")
         raise HTTPException(status_code=502, detail="Odoo connection failed")
 
-
 def execute_odoo_query(
     model: str, method: str, args: list, kwargs: dict = None, retries: int = 2
 ):
@@ -304,7 +239,6 @@ def execute_odoo_query(
                 )
             time.sleep(0.4 * (attempt + 1))
 
-
 def get_embedder():
     """Get or initialize the sentence transformer model."""
     global _model
@@ -318,55 +252,209 @@ def get_embedder():
             raise HTTPException(status_code=500, detail="Failed to load AI model")
     return _model
 
+PRODUCT_HIERARCHY = {
+    "rehabilitacion": {
+        "product_classes": ["Rehabilitacion"],
+        "product_subclasses": [
+            "Material blando", "Fisioterapia", "Movilidad", "Cuidado en casa",
+            "Terapia respiratoria", "Alivio del dolor", "Bienestar y relajacion"
+        ],
+        "product_families": [
+            "Inmovilizadores", "Soportes", "Fajas", "Bastones", "Sillas de ruedas",
+            "Andadores", "Muletas", "Estimuladores", "Colchones", "Almohadas y cojines"
+        ],
+        "keywords": [
+            "rehabilitacion", "fisioterapia", "silla", "ruedas", "baston", "muleta",
+            "andador", "faja", "soporte", "inmovilizador", "estimulador", "movilidad"
+        ],
+        "spanish_terms": [
+            "rehabilitacion", "fisioterapia", "silla de ruedas", "baston", "muleta",
+            "andador", "faja", "soporte", "movilidad", "terapia"
+        ]
+    },
+    
+    "material_medico": {
+        "product_classes": ["Material medico"],
+        "product_subclasses": [
+            "Quirurgico", "Instrumental", "Descartable", "Protesis", "Cirugia vascular"
+        ],
+        "product_families": [
+            "Cateter", "Pinzas", "Canulas", "Sondas", "Agujas", "Jeringas",
+            "Guantes", "Mascarillas", "Bisturi", "Tijeras", "Hilos de sutura"
+        ],
+        "keywords": [
+            "quirurgico", "instrumental", "cateter", "pinza", "canula", "sonda",
+            "aguja", "jeringa", "guante", "mascarilla", "bisturi", "cirugia"
+        ],
+        "spanish_terms": [
+            "material medico", "quirurgico", "instrumental", "cateter", "pinza",
+            "canula", "sonda", "aguja", "jeringa", "cirugia"
+        ]
+    },
+    
+    "medico_hospitalario": {
+        "product_classes": ["Medico hospitalario"],
+        "product_subclasses": [
+            "Ultrasonido", "Monitoreo de signos vitales", "Quirofano", "Mobiliario",
+            "Anestesia", "Ventilacion mecanica", "Cuidado materno infantil"
+        ],
+        "product_families": [
+            "Ultrasonido", "Monitores", "Maquina de anestesia", "Lamparas",
+            "Mesas", "Ventiladores mecanicos", "Transductores", "Cables", "Sensores"
+        ],
+        "keywords": [
+            "hospital", "ultrasonido", "monitor", "anestesia", "ventilador",
+            "lampara", "mesa", "quirofano", "transductor", "cable", "sensor", "SPO2"
+        ],
+        "spanish_terms": [
+            "medico hospitalario", "hospital", "ultrasonido", "monitor", "anestesia",
+            "ventilador", "quirofano", "mesa quirurgica", "lampara", "SPO2", "mindray"
+        ]
+    },
+    
+    "cardiologia_intervencionista": {
+        "product_classes": ["Cardiologia intervencionista"],
+        "product_subclasses": [
+            "Coronario", "Periferico vascular", "TAVI", "Denervacion renal"
+        ],
+        "product_families": [
+            "Stents", "Balones", "Cateter", "Guias", "Introductores", "Valvulas"
+        ],
+        "keywords": [
+            "cardiologia", "stent", "balon", "cateter", "guia", "introductor",
+            "valvula", "coronario", "vascular", "TAVI", "cardiaco"
+        ],
+        "spanish_terms": [
+            "cardiologia", "stent", "balon", "cateter", "guia", "introductor",
+            "valvula", "coronario", "vascular", "corazon"
+        ]
+    },
+    
+    "medico_clinico": {
+        "product_classes": ["Medico clinico"],
+        "product_subclasses": [
+            "Medicion y diagnostico", "Fisioterapia", "Mobiliario", "Cirugia menor"
+        ],
+        "product_families": [
+            "Estetoscopios", "Esfigmomanometros", "Electrocardiografos", "Balanzas",
+            "Termometros", "Otoscopios", "Oximetros", "Estimuladores"
+        ],
+        "keywords": [
+            "clinico", "estetoscopio", "esfigmomanometro", "electrocardiografo",
+            "balanza", "termometro", "otoscopio", "oximetro", "diagnostico"
+        ],
+        "spanish_terms": [
+            "medico clinico", "estetoscopio", "tension", "electrocardiografo",
+            "balanza", "termometro", "diagnostico", "clinica"
+        ]
+    },
+    
+    "atencion_medica": {
+        "product_classes": ["Atencion medica"],
+        "product_subclasses": [
+            "Cuidado de heridas", "Ostomia", "Incontinencia", "Alimentacion",
+            "Terapia para varices y linfedema", "Monitoreo"
+        ],
+        "product_families": [
+            "Medias y calcetines", "Apositos", "Bolsas", "Mascaras", "Gel",
+            "Cintas y vendas", "Sondas", "Bombas"
+        ],
+        "keywords": [
+            "atencion", "cuidado", "heridas", "ostomia", "incontinencia",
+            "varices", "medias", "aposito", "vendas", "gel", "compresion"
+        ],
+        "spanish_terms": [
+            "atencion medica", "cuidado", "heridas", "ostomia", "medias",
+            "apositos", "vendas", "gel", "compresion"
+        ]
+    }
+}
 
 def categorize_query(query: str) -> Dict[str, float]:
-    """Categorize the query into product categories with confidence scores."""
+    """Data-driven query categorization using actual product hierarchy."""
     query_lower = query.lower()
     scores = {}
-
-    for category, info in PRODUCT_CATEGORIES.items():
+    
+    for category, info in PRODUCT_HIERARCHY.items():
         score = 0
-        # Check for exact symptom matches
-        for symptom in info["symptoms"]:
-            if symptom in query_lower:
-                score += 2.0
-
-        # Check for keyword matches
+        
+        # Check product families (highest weight - most specific)
+        for family in info["product_families"]:
+            if family.lower() in query_lower:
+                score += 4.0
+        
+        # Check product subclasses (high weight)
+        for subclass in info["product_subclasses"]:
+            if subclass.lower() in query_lower:
+                score += 3.5
+        
+        # Check Spanish terms (optimized for your market)
+        for term in info["spanish_terms"]:
+            if term.lower() in query_lower:
+                score += 3.0
+        
+        # Check keywords
         for keyword in info["keywords"]:
-            if keyword in query_lower:
-                score += 1.0
-
-        # Check for product matches
-        for product in info["products"]:
-            if product in query_lower:
-                score += 1.5
-
+            if keyword.lower() in query_lower:
+                score += 2.0
+        
+        # Check product classes
+        for prod_class in info["product_classes"]:
+            if prod_class.lower() in query_lower:
+                score += 2.5
+        
         if score > 0:
             scores[category] = score
-
+    
     # Normalize scores
     if scores:
         max_score = max(scores.values())
         scores = {k: v / max_score for k, v in scores.items()}
-
+    
     return scores
-
-
 def get_odoo_search_terms(query: str) -> List[str]:
-    """Get Odoo search terms based on query categorization."""
+    """Generate enhanced search terms based on product classification data."""
     categories = categorize_query(query)
     search_terms = []
+    
+    # Add original query words (filtered)
+    query_words = [word for word in query.lower().split() if len(word) > 2]
+    search_terms.extend(query_words)
+    
+    # Add terms from top-scoring categories
+    for category, score in sorted(categories.items(), key=lambda x: x[1], reverse=True):
+        if score > 0.3:  # Only high-confidence matches
+            category_info = PRODUCT_HIERARCHY[category]
+            
+            # Add Spanish terms (best for Odoo search)
+            search_terms.extend(category_info["spanish_terms"][:4])
+            
+            # Add top product families (your actual products)
+            search_terms.extend(category_info["product_families"][:3])
+    
+    # Remove duplicates while preserving order
+    seen = set()
+    unique_terms = []
+    for term in search_terms:
+        if term.lower() not in seen:
+            seen.add(term.lower())
+            unique_terms.append(term)
+    
+    return unique_terms[:15]  # Limit for performance
 
-    for category, score in categories.items():
-        if score > 0.3:  # Only use categories with decent confidence
-            search_terms.extend(PRODUCT_CATEGORIES[category]["odoo_search_terms"])
-
-    # Add original query terms as fallback
-    query_words = query.lower().split()
-    search_terms.extend([word for word in query_words if len(word) > 3])
-
-    return list(set(search_terms))  # Remove duplicates
-
+def get_category_metadata(category: str) -> Dict:
+    """Get detailed metadata for a product category."""
+    if category in PRODUCT_HIERARCHY:
+        info = PRODUCT_HIERARCHY[category]
+        return {
+            "category": category,
+            "product_classes": info["product_classes"],
+            "total_subclasses": len(info["product_subclasses"]),
+            "total_families": len(info["product_families"]),
+            "top_families": info["product_families"][:5],
+            "search_optimization": info["spanish_terms"][:5]
+        }
+    return {}
 
 def search_odoo_products(search_terms: List[str], limit: int = 100) -> List[Dict]:
     """Search Odoo products using the provided search terms."""
@@ -375,91 +463,173 @@ def search_odoo_products(search_terms: List[str], limit: int = 100) -> List[Dict
     try:
         if not search_terms:
             # Fallback: get all saleable products
+            logger.info("No search terms provided, getting all saleable products")
             return execute_odoo_query(
-                "product.template",
+                "product.product",
                 "search_read",
                 [[sale_ok_clause]],
                 {
                     "fields": [
                         "name",
                         "description_sale",
+                        "website_description",  # Add website_description
                         "default_code",
                         "list_price",
                         "qty_available",
                         "categ_id",
                     ],
                     "limit": limit,
+                    "context":{"lang":'es_ES'}
                 },
             )
 
-        # Limit number of terms to avoid overly complex queries
-        terms = search_terms[:5]
-        fields_to_search = ["name", "description_sale", "default_code"]
+        # Strategy: Search with the most relevant terms, then combine results
+        all_products = []
+        seen_ids = set()
+        
+        # Limit to top 3 search terms to avoid overly complex queries
+        terms_to_use = search_terms[:3]
+        logger.info(f"Searching with terms: {terms_to_use}")
+        
+        for i, term in enumerate(terms_to_use):
+            try:
+                logger.info(f"Searching for term: '{term}'")
+                # Updated domain to include website_description
+                domain = [
+                    "&",  # AND operator
+                    sale_ok_clause,  # Must be saleable
+                    "|",  # OR operator for the search fields
+                    "|",  # Another OR to chain 4 conditions
+                    "|",  # Another OR to chain 4 conditions
+                    ["name", "ilike", term],
+                    ["description_sale", "ilike", term], 
+                    ["default_code", "ilike", term],
+                    ["website_description", "ilike", term]  # Add website_description
+                ]
 
-        # Build a flat list of field clauses for all terms
-        clauses = []
-        for term in terms:
-            for field in fields_to_search:
-                clauses.append([field, "ilike", term])
+                # Calculate limit per term (avoid division by zero)
+                term_limit = max(20, limit // len(terms_to_use)) if len(terms_to_use) > 0 else limit
+                
+                products = execute_odoo_query(
+                    "product.product",
+                    "search_read",
+                    [domain],
+                    {
+                        "fields": [
+                            "name",
+                            "description_sale",
+                            "website_description",  # Add website_description
+                            "default_code",
+                            "list_price",
+                            "qty_available",
+                            "categ_id",
+                        ],
+                        "limit": term_limit,
+                        "context": {"lang": 'es_ES'}
 
-        # Build a nested OR expression from clauses
-        def or_group(items):
-            if not items:
-                return []
-            expr = items[0]
-            for item in items[1:]:
-                expr = ["|", expr, item]
-            return expr
+                    },
+                )
+                
+                logger.info(f"Found {len(products)} products for term '{term}'")
+                
+                # Add unique products only
+                for product in products:
+                    if product["id"] not in seen_ids:
+                        all_products.append(product)
+                        seen_ids.add(product["id"])
+                        
+                        # Stop if we have enough products
+                        if len(all_products) >= limit:
+                            break
+                            
+                if len(all_products) >= limit:
+                    logger.info(f"Reached limit of {limit} products")
+                    break
+                    
+            except Exception as term_error:
+                logger.warning(f"Search failed for term '{term}': {term_error}")
+                continue
 
-        or_expr = or_group(clauses)
+        # If no products found with any term, fallback to all saleable products
+        if not all_products:
+            logger.info("No products found with search terms, falling back to all products")
+            all_products = execute_odoo_query(
+                "product.product",
+                "search_read",
+                [[sale_ok_clause]],
+                {
+                    "fields": [
+                        "name",
+                        "description_sale",
+                        "website_description",  # Add website_description
+                        "default_code",
+                        "list_price",
+                        "qty_available",
+                        "categ_id",
+                    ],
+                    "limit": limit,
+                    "context": {"lang": 'es_ES'}
 
-        # Combine sale_ok with the OR expression using AND
-        domain = ["&", sale_ok_clause, or_expr] if or_expr else [sale_ok_clause]
+                },
+            )
 
-        products = execute_odoo_query(
-            "product.template",
-            "search_read",
-            [domain],
-            {
-                "fields": [
-                    "name",
-                    "description_sale",
-                    "default_code",
-                    "list_price",
-                    "qty_available",
-                    "categ_id",
-                ],
-                "limit": limit,
-            },
-        )
-        return products
+        logger.info(f"Returning {len(all_products[:limit])} products total")
+        return all_products[:limit]
+        
     except Exception as e:
-        logger.warning(f"Odoo search failed: {e}, falling back to all products")
+        logger.error(f"Odoo search failed: {e}", exc_info=True)
         # Fallback to all saleable products
-        return execute_odoo_query(
-            "product.template",
-            "search_read",
-            [[sale_ok_clause]],
-            {
-                "fields": [
-                    "name",
-                    "description_sale",
-                    "default_code",
-                    "list_price",
-                    "qty_available",
-                    "categ_id",
-                ],
-                "limit": limit,
-            },
-        )
+        try:
+            logger.info("Attempting fallback to all products")
+            return execute_odoo_query(
+                "product.product",
+                "search_read",
+                [[sale_ok_clause]],
+                {
+                    "fields": [
+                        "name",
+                        "description_sale",
+                        "website_description",  # Add website_description
+                        "default_code",
+                        "list_price",
+                        "qty_available",
+                        "categ_id",
+                    ],
+                    "limit": limit,
+                    "context": {"lang": 'es_ES'}
 
+                },
+            )
+        except Exception as fallback_error:
+            logger.error(f"Even fallback failed: {fallback_error}")
+            return []  # Return empty list if everything fails
 
 def rank_products_by_value(products: List[Dict]) -> List[Dict]:
     """Rank products by value proposition (quality, features, price)."""
     for product in products:
         price = product.get("list_price", 0)
-        name = product.get("name", "").lower()
-        description = product.get("description_sale", "").lower()
+        name = product.get("name", "").lower() if product.get("name") else ""
+        
+        # Handle description_sale that might be False, None, or a string
+        description_raw = product.get("description_sale", "")
+        if isinstance(description_raw, str):
+            description = description_raw.lower()
+        elif description_raw:  # Could be True/False or other truthy value
+            description = str(description_raw).lower()
+        else:  # None, False, empty string, etc.
+            description = ""
+            
+        # Handle website_description that might be False, None, or a string
+        website_desc_raw = product.get("website_description", "")
+        if isinstance(website_desc_raw, str):
+            website_desc = website_desc_raw.lower()
+        elif website_desc_raw:  # Could be True/False or other truthy value
+            website_desc = str(website_desc_raw).lower()
+        else:  # None, False, empty string, etc.
+            website_desc = ""
+        
+        # Combine all text for analysis
+        all_text = f"{name} {description} {website_desc}"
 
         # Premium indicators
         premium_indicators = [
@@ -469,13 +639,16 @@ def rank_products_by_value(products: List[Dict]) -> List[Dict]:
             "ergonomic",
             "therapeutic",
             "advanced",
+            "high-quality",
+            "precision",
+            "clinical",
+            "hospital-grade"
         ]
         is_premium = any(
-            indicator in name or indicator in description
-            for indicator in premium_indicators
+            indicator in all_text for indicator in premium_indicators
         )
 
-        # Feature richness
+        # Feature richness - expanded list for medical equipment
         feature_indicators = [
             "adjustable",
             "memory foam",
@@ -484,11 +657,18 @@ def rank_products_by_value(products: List[Dict]) -> List[Dict]:
             "heating",
             "massage",
             "vibration",
+            "digital",
+            "wireless",
+            "bluetooth",
+            "rechargeable",
+            "waterproof",
+            "sterilizable",
+            "autoclavable",
+            "disposable",
+            "reusable"
         ]
         features = sum(
-            1
-            for indicator in feature_indicators
-            if indicator in name or indicator in description
+            1 for indicator in feature_indicators if indicator in all_text
         )
 
         # Calculate value score (higher is better)
@@ -496,35 +676,168 @@ def rank_products_by_value(products: List[Dict]) -> List[Dict]:
         if is_premium:
             value_score += 3
         value_score += features * 2
+        
+        # Improved price scoring: normalize by product category/type
         if price > 0:
-            value_score += min(price / 100, 5)  # Cap price contribution
+            # Use price more strategically - higher prices aren't always better value
+            # Focus on feature-to-price ratio instead
+            if features > 0:
+                value_score += min(features / max(price / 100, 1), 3)  # Feature density
+            else:
+                value_score += min(price / 200, 2)  # Basic price contribution for products without clear features
+            
+        # Bonus for having detailed website description
+        if len(website_desc) > 50:  # Substantial description
+            value_score += 1
+            
+        # Availability bonus (prefer in-stock items)
+        qty_available = product.get("qty_available", 0)
+        if qty_available > 0:
+            value_score += 1
+        if qty_available > 10:  # Well-stocked items
+            value_score += 0.5
 
         product["_value_score"] = value_score
 
     return sorted(products, key=lambda x: x.get("_value_score", 0), reverse=True)
 
-
-def find_alternatives(products: List[Dict]) -> Dict[str, List[Dict]]:
-    """Find premium and budget alternatives."""
+def find_alternatives(products: List[Dict], main_product_id: int = None) -> Dict[str, List[Dict]]:
+    """
+    Find premium and budget alternatives, prioritizing curated alternatives when available.
+    
+    Args:
+        products: List of products to analyze
+        main_product_id: ID of the main product to find alternatives for (optional)
+    """
     if not products:
         return {"premium": [], "budget": []}
 
-    # Sort by price
-    sorted_products = sorted(products, key=lambda x: x.get("list_price", 0))
-    median_price = sorted_products[len(sorted_products) // 2].get("list_price", 0)
+    # If we have a main product ID, try to get its curated alternatives first
+    curated_alternatives = []
+    if main_product_id:
+        try:
+            # Fetch the main product to get its alternative_related_product_ids
+            main_product_data = execute_odoo_query(
+                "product.product",
+                "search_read",
+                [[["id", "=", main_product_id]]],
+                {
+                    "fields": ["alternative_related_product_ids"],
+                    "limit": 1,
+                    "context": {"lang": 'es_ES'}
+                },
+            )
+            
+            if main_product_data and main_product_data[0].get("alternative_related_product_ids"):
+                alternative_ids = main_product_data[0]["alternative_related_product_ids"]
+                
+                # Fetch the curated alternative products
+                curated_alternatives = execute_odoo_query(
+                    "product.product",
+                    "search_read",
+                    [[["id", "in", alternative_ids], ["sale_ok", "=", True]]],
+                    {
+                        "fields": [
+                            "name",
+                            "description_sale",
+                            "website_description",
+                            "default_code",
+                            "list_price",
+                            "qty_available",
+                            "categ_id",
+                        ],
+                        "context": {"lang": 'es_ES'}
+                    },
+                )
+                
+                logger.info(f"Found {len(curated_alternatives)} curated alternatives for product {main_product_id}")
+                
+        except Exception as e:
+            logger.warning(f"Failed to fetch curated alternatives for product {main_product_id}: {e}")
 
+    # Combine curated alternatives with the original products list
+    all_products_for_analysis = products.copy()
+    
+    # Add curated alternatives that aren't already in the products list
+    existing_ids = {p.get("id") for p in products if p.get("id")}
+    for alt in curated_alternatives:
+        if alt.get("id") not in existing_ids:
+            all_products_for_analysis.append(alt)
+
+    # Sort by price (primary indicator of premium vs budget)
+    sorted_products = sorted(all_products_for_analysis, key=lambda x: x.get("list_price", 0))
+    
+    if not sorted_products:
+        return {"premium": [], "budget": []}
+    
+    # Calculate price tiers based on the distribution
+    prices = [p.get("list_price", 0) for p in sorted_products if p.get("list_price", 0) > 0]
+    
+    if not prices:
+        # If no products have prices, fall back to feature-based classification
+        return {
+            "premium": rank_products_by_value(all_products_for_analysis)[:3],
+            "budget": rank_products_by_value(all_products_for_analysis)[-3:],
+        }
+    
+    # Use quartiles for better price segmentation
+    q1 = np.percentile(prices, 25) if len(prices) > 4 else min(prices)
+    q3 = np.percentile(prices, 75) if len(prices) > 4 else max(prices)
+    median_price = np.median(prices)
+    
+    # Define price-based categories (primary criteria)
     premium_products = [
-        p for p in products if p.get("list_price", 0) >= median_price * 0.8
+        p for p in all_products_for_analysis 
+        if p.get("list_price", 0) >= q3
     ]
+    
     budget_products = [
-        p for p in products if p.get("list_price", 0) <= median_price * 1.2
+        p for p in all_products_for_analysis 
+        if p.get("list_price", 0) <= q1 and p.get("list_price", 0) > 0
     ]
+    
+    # Mid-range products (can be classified as either based on features)
+    mid_range_products = [
+        p for p in all_products_for_analysis 
+        if q1 < p.get("list_price", 0) < q3
+    ]
+    
+    # Prioritize curated alternatives in the results
+    def prioritize_curated(product_list):
+        """Sort products with curated alternatives first, then by value score"""
+        curated_ids = {alt.get("id") for alt in curated_alternatives}
+        
+        curated = [p for p in product_list if p.get("id") in curated_ids]
+        non_curated = [p for p in product_list if p.get("id") not in curated_ids]
+        
+        # Rank both groups by value
+        curated_ranked = rank_products_by_value(curated)
+        non_curated_ranked = rank_products_by_value(non_curated)
+        
+        # Combine: curated first, then non-curated
+        return curated_ranked + non_curated_ranked
+    
+    # Apply value ranking within each price category
+    premium_ranked = prioritize_curated(premium_products)
+    budget_ranked = prioritize_curated(budget_products)
+    
+    # If we don't have enough in premium/budget, supplement from mid-range based on features
+    mid_range_ranked = rank_products_by_value(mid_range_products)
+    
+    # Add high-value mid-range products to premium if needed
+    if len(premium_ranked) < 3:
+        high_value_mid = [p for p in mid_range_ranked if p.get("_value_score", 0) > 5]
+        premium_ranked.extend(high_value_mid[:3 - len(premium_ranked)])
+    
+    # Add low-value mid-range products to budget if needed
+    if len(budget_ranked) < 3:
+        low_value_mid = [p for p in mid_range_ranked if p.get("_value_score", 0) <= 5]
+        budget_ranked.extend(low_value_mid[:3 - len(budget_ranked)])
 
     return {
-        "premium": rank_products_by_value(premium_products)[:3],
-        "budget": rank_products_by_value(budget_products)[:3],
+        "premium": premium_ranked[:3],
+        "budget": budget_ranked[:3],
     }
-
 
 def rag_analyze_products(
     query: str, products: List[Dict], top_k: int = 10
@@ -533,10 +846,42 @@ def rag_analyze_products(
     if not products:
         return []
 
-    # Create product texts for embedding
+    # Create enhanced product texts for embedding using all available text fields
     product_texts = []
     for product in products:
-        text = f"{product.get('name', '')} | {product.get('default_code', '')} | {product.get('description_sale', '')}"
+        # Combine all text fields for richer context
+        name = product.get('name', '')
+        code = product.get('default_code', '')
+        
+        # Handle description_sale (might be False/None)
+        desc_sale = product.get('description_sale', '')
+        if isinstance(desc_sale, str):
+            desc_sale = desc_sale
+        elif desc_sale:
+            desc_sale = str(desc_sale)
+        else:
+            desc_sale = ''
+            
+        # Handle website_description (might be False/None)
+        website_desc = product.get('website_description', '')
+        if isinstance(website_desc, str):
+            website_desc = website_desc
+        elif website_desc:
+            website_desc = str(website_desc)
+        else:
+            website_desc = ''
+        
+        # Create comprehensive text combining all fields
+        # Give more weight to name and website_description as they're usually more descriptive
+        text_parts = [
+            f"Product: {name}",
+            f"Code: {code}",
+            f"Description: {desc_sale}",
+            f"Details: {website_desc}"
+        ]
+        
+        # Filter out empty parts and join
+        text = " | ".join([part for part in text_parts if part.split(": ", 1)[1].strip()])
         product_texts.append(text)
 
     # Get embeddings
@@ -563,7 +908,6 @@ def rag_analyze_products(
 
     return ranked_products
 
-
 # API endpoints
 @app.get("/health")
 async def health_check():
@@ -575,23 +919,24 @@ async def health_check():
         "rag_enabled": USE_RAG,
     }
 
-
 @app.post("/search_products")
 async def search_products(request: SearchRequest):
     """Basic product search endpoint."""
     try:
         domain = [
-            "|",
+            "&",  # AND operator
+            ["sale_ok", "=", True],  # Must be saleable
+            "|",  # OR operator for the search fields
+            "|",  # Another OR to chain 4 conditions
+            "|",  # Another OR to chain 4 conditions
             ["name", "ilike", request.term],
-            [
-                "|",
-                ["description_sale", "ilike", request.term],
-                ["default_code", "ilike", request.term],
-            ],
+            ["description_sale", "ilike", request.term], 
+            ["default_code", "ilike", request.term],
+            ["website_description", "ilike", request.term]  # Add website_description
         ]
 
         items = execute_odoo_query(
-            "product.template",
+            "product.product",
             "search_read",
             [domain],
             {
@@ -599,10 +944,13 @@ async def search_products(request: SearchRequest):
                     "name",
                     "default_code",
                     "description_sale",
+                    "website_description",  # Add website_description
                     "list_price",
                     "qty_available",
                 ],
                 "limit": request.limit,
+                "context": {"lang": 'es_ES'}
+
             },
         )
 
@@ -611,7 +959,6 @@ async def search_products(request: SearchRequest):
     except Exception as e:
         logger.error(f"Search products failed: {e}")
         raise HTTPException(status_code=500, detail="Search failed")
-
 
 @app.post("/intelligent_search")
 async def intelligent_search(request: IntelligentSearchRequest):
@@ -664,7 +1011,8 @@ async def intelligent_search(request: IntelligentSearchRequest):
         # Find alternatives if requested
         alternatives = {"premium": [], "budget": []}
         if request.include_alternatives and top_recommendations:
-            alternatives = find_alternatives(final_products)
+            main_product_id = top_recommendations[0].get("id") if top_recommendations else None
+            alternatives = find_alternatives(final_products, main_product_id)
 
         return {
             "query": request.query,
@@ -682,7 +1030,6 @@ async def intelligent_search(request: IntelligentSearchRequest):
     except Exception as e:
         logger.error(f"Intelligent search failed: {e}")
         raise HTTPException(status_code=500, detail="Intelligent search failed")
-
 
 @app.post("/recommend_products")
 async def recommend_products(request: IntelligentSearchRequest):
@@ -748,13 +1095,71 @@ async def recommend_products(request: IntelligentSearchRequest):
         raise HTTPException(status_code=500, detail="Product recommendations failed")
 
 
+# 6. ADD this function to enrich product data with classification
+def enrich_product_with_classification(product: Dict) -> Dict:
+    """Enrich product data with classification information."""
+    product_text = f"{product.get('name', '')} {product.get('description_sale', '')} {product.get('website_description', '')}"
+    
+    # Determine product category based on content
+    categories = categorize_query(product_text)
+    
+    # Add classification metadata
+    product["_classification"] = {
+        "categories": categories,
+        "primary_category": max(categories.items(), key=lambda x: x[1])[0] if categories else "general",
+        "confidence": max(categories.values()) if categories else 0.0
+    }
+    
+    return product
+
 @app.get("/categories")
 async def get_categories():
-    """Get available product categories and their keywords."""
+    """Get available product categories based on real product data."""
+    categories_info = {}
+    
+    for category, info in PRODUCT_HIERARCHY.items():
+        categories_info[category] = {
+            "product_classes": info["product_classes"],
+            "total_subclasses": len(info["product_subclasses"]),
+            "total_families": len(info["product_families"]),
+            "sample_families": info["product_families"][:5]
+        }
+    
     return {
-        "categories": PRODUCT_CATEGORIES,
-        "total_categories": len(PRODUCT_CATEGORIES),
+        "categories": categories_info,
+        "total_categories": len(PRODUCT_HIERARCHY),
+        "data_source": "Real product classification from inventory",
+        "coverage": "1,161 products across 289 families"
     }
+
+# 6. ADD enhanced classification endpoint
+@app.post("/classify_query")
+async def classify_query(request: dict):
+    """Enhanced query classification using real product data."""
+    try:
+        query = request.get("query", "")
+        if not query:
+            raise HTTPException(status_code=400, detail="Query is required")
+        
+        categories = categorize_query(query)
+        search_terms = get_odoo_search_terms(query)
+        
+        # Get detailed info for top category
+        top_category = max(categories.items(), key=lambda x: x[1])[0] if categories else None
+        category_metadata = get_category_metadata(top_category) if top_category else {}
+        
+        return {
+            "query": query,
+            "categories": categories,
+            "suggested_search_terms": search_terms,
+            "top_category": top_category,
+            "confidence": max(categories.values()) if categories else 0.0,
+            "category_metadata": category_metadata,
+            "classification_method": "data_driven_product_hierarchy"
+        }
+    except Exception as e:
+        logger.error(f"Enhanced query classification failed: {e}")
+        raise HTTPException(status_code=500, detail="Query classification failed")
 
 
 @app.get("/test_connection")
@@ -765,12 +1170,13 @@ async def test_connection():
 
         # Get some basic product info
         products = execute_odoo_query(
-            "product.template",
+            "product.product",
             "search_read",
             [[["sale_ok", "=", True]]],
             {
                 "fields": ["name", "list_price", "qty_available"],
                 "limit": 5,
+                "context": {"lang": 'es_ES'}
             },
         )
 
